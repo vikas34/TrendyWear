@@ -9,7 +9,7 @@ const [visible, setVisible]= useState(false)
   return (
     <div className="flex items-center justify-between py-5 font-medium">
       {/* Logo */}
-      <img src="logo.png" alt="logo" className="w-40" />
+      <Link to='/'><img src="logo.png" alt="logo" className="w-40" /></Link> 
 
       {/* Navigation */}
       <ul className="hidden sm:flex gap-5 text-sm text-gray-700">
@@ -53,14 +53,16 @@ const [visible, setVisible]= useState(false)
             </div>
           </div>
         </div>
+        
         <Link to="/cart" className="relative"> 
         <img src={assets.cart_icon} alt="" className="w-5 min-w-5" />
         <p className="absolute right-[-5px] bottom-[-5px] text-center w-4 leading-4 bg-black text-white aspect-square rounded-full text-[8px]">10</p>
-
-
         </Link>
+
         <img onClick={()=>setVisible(true)} src={assets.menu_icon} alt="" className="w-5 cursor-pointer sm:hidden" />
       </div>
+      
+      
       {/* SideBar Menu for small screen*/}
       <div className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${visible ? 'w-full' : 'w-0'}`}>
         <div className="flex flex-col text-gray-600">
