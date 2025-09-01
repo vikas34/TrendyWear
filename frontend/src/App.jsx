@@ -10,6 +10,7 @@ import Login from "./pages/Login"
 import PlaceOrder from "./pages/PlaceOrder"
 import Orders from "./pages/Orders.jsx"
 import Navbar from "./components/Navbar.jsx";
+import Footer from "./components/Footer.jsx";
 
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
         <Route path="/orders" element={<Orders />} />
 
       </Routes>
+      <Footer/>
     </div>
   );
 };
