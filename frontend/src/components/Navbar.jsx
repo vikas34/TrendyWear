@@ -3,15 +3,15 @@ import { Link, NavLink } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { ShopContext } from "../context/ShopContext";
 
-
 const Navbar = () => {
-
-const [visible, setVisible]= useState(false)
-const {setShowSearch} =useContext(ShopContext)
+  const [visible, setVisible] = useState(false);
+  const { setShowSearch, getCartCount } = useContext(ShopContext);
   return (
     <div className="flex items-center justify-between py-5 font-medium">
       {/* Logo */}
-      <Link to='/'><img src="logo.png" alt="logo" className="w-40" /></Link> 
+      <Link to="/">
+        <img src="/logo.png" alt="logo" className="w-40" />
+      </Link>
 
       {/* Navigation */}
       <ul className="hidden sm:flex gap-5 text-sm text-gray-700">
@@ -35,7 +35,8 @@ const {setShowSearch} =useContext(ShopContext)
 
       {/* Icons */}
       <div className="flex items-center gap-6">
-        <img onClick={()=> setShowSearch(true)}
+        <img
+          onClick={() => setShowSearch(true)}
           src={assets.search_icon}
           alt="search"
           className="w-5 cursor-pointer"
@@ -55,36 +56,67 @@ const {setShowSearch} =useContext(ShopContext)
             </div>
           </div>
         </div>
-        
-        <Link to="/cart" className="relative"> 
-        <img src={assets.cart_icon} alt="" className="w-5 min-w-5" />
-        <p className="absolute right-[-5px] bottom-[-5px] text-center w-4 leading-4 bg-black text-white aspect-square rounded-full text-[8px]">10</p>
+
+        <Link to="/cart" className="relative">
+          <img src={assets.cart_icon} alt="" className="w-5 min-w-5" />
+          <p className="absolute right-[-5px] bottom-[-5px] text-center w-4 leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
+            {getCartCount()}
+          </p>
         </Link>
 
-        <img onClick={()=>setVisible(true)} src={assets.menu_icon} alt="" className="w-5 cursor-pointer sm:hidden" />
+        <img
+          onClick={() => setVisible(true)}
+          src={assets.menu_icon}
+          alt=""
+          className="w-5 cursor-pointer sm:hidden"
+        />
       </div>
-      
-      
+
       {/* SideBar Menu for small screen*/}
-      <div className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${visible ? 'w-full' : 'w-0'}`}>
+      <div
+        className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${
+          visible ? "w-full" : "w-0"
+        }`}
+      >
         <div className="flex flex-col text-gray-600">
-          <div onClick={()=>setVisible(false)} className="flex items-center gap-4 p-3 cursor-pointer">
+          <div
+            onClick={() => setVisible(false)}
+            className="flex items-center gap-4 p-3 cursor-pointer"
+          >
             <img src={assets.dropdown_icon} alt="" className="h-4 rotate-180" />
             <p>Back</p>
-
           </div>
-         
-          <NavLink onClick={()=>setVisible(false)} className="py-2 pl-6 hover:bg-gray-100" to={"/"}>Home</NavLink>
-          <NavLink onClick={()=>setVisible(false)} className="py-2 pl-6 hover:bg-gray-100" to={"/collection"}>Collection</NavLink>
-          <NavLink onClick={()=>setVisible(false)} className="py-2 pl-6 hover:bg-gray-100" to={"/abot"}>About</NavLink>
-          <NavLink onClick={()=>setVisible(false)} className="py-2 pl-6 hover:bg-gray-100" to={"/contact"}>Contact</NavLink>
-     
 
+          <NavLink
+            onClick={() => setVisible(false)}
+            className="py-2 pl-6 hover:bg-gray-100"
+            to={"/"}
+          >
+            Home
+          </NavLink>
+          <NavLink
+            onClick={() => setVisible(false)}
+            className="py-2 pl-6 hover:bg-gray-100"
+            to={"/collection"}
+          >
+            Collection
+          </NavLink>
+          <NavLink
+            onClick={() => setVisible(false)}
+            className="py-2 pl-6 hover:bg-gray-100"
+            to={"/abot"}
+          >
+            About
+          </NavLink>
+          <NavLink
+            onClick={() => setVisible(false)}
+            className="py-2 pl-6 hover:bg-gray-100"
+            to={"/contact"}
+          >
+            Contact
+          </NavLink>
         </div>
-
       </div>
-
-
     </div>
   );
 };
