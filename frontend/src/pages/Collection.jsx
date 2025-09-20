@@ -10,7 +10,7 @@ const Collection = () => {
   const [filterProducts, setFilterProducts] = useState([]);
   const [category, setCategory] = useState([]);
   const [subCategory, setSubCategory] = useState([]);
-  const [sortType, setSortType] = useState('relavent')
+  const [sortType, setSortType] = useState("relavent");
 
   const toggleCategory = (e) => {
     if (category.includes(e.target.value)) {
@@ -30,10 +30,11 @@ const Collection = () => {
 
   const applyfilter = () => {
     let productsCopy = products.slice();
-    if(showSearch && search){
-      productsCopy = productsCopy.filter(item => item.name.toLowerCase().includes(search.toLowerCase()))
+    if (showSearch && search) {
+      productsCopy = productsCopy.filter((item) =>
+        item.name.toLowerCase().includes(search.toLowerCase())
+      );
     }
-
 
     if (category.length > 0) {
       productsCopy = productsCopy.filter((item) =>
@@ -53,32 +54,31 @@ const Collection = () => {
   //   setFilterProducts(products);
   // }, []);
 
-  const sortProduct = ()=>{
-    let fpCopy = filterProducts.slice()
+  const sortProduct = () => {
+    let fpCopy = filterProducts.slice();
 
-    switch(sortType){
-      case 'low-high':
-        setFilterProducts(fpCopy.sort((a,b)=>(a.price - b.price)))
+    switch (sortType) {
+      case "low-high":
+        setFilterProducts(fpCopy.sort((a, b) => a.price - b.price));
         break;
 
-        case 'high-low':
-           setFilterProducts(fpCopy.sort((a,b)=>(b.price - a.price)))
+      case "high-low":
+        setFilterProducts(fpCopy.sort((a, b) => b.price - a.price));
         break;
 
-        default:
-          applyfilter()
-          break;
-
+      default:
+        applyfilter();
+        break;
     }
-  }
+  };
 
   useEffect(() => {
     applyfilter();
-  }, [category, subCategory, search, showSearch]);
+  }, [category, subCategory, search, showSearch, products]);
 
-  useEffect(()=>{
-    sortProduct()
-  },[sortType])
+  useEffect(() => {
+    sortProduct();
+  }, [sortType]);
 
   // useEffect(() => {
   //   console.log(subCategory);
@@ -183,7 +183,8 @@ const Collection = () => {
           <Title text1={"ALL"} text2={"COLLECTIONS"} />
 
           {/* Product Sort */}
-          <select onChange={(e)=> setSortType(e.target.value)}
+          <select
+            onChange={(e) => setSortType(e.target.value)}
             className="border-2 rounded border-gray-300 text-sm px-2"
             name=""
             id=""
