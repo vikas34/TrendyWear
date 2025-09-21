@@ -5,11 +5,13 @@ import { assets } from "../assets/assets";
 import CartTotal from "../components/CartTotal";
 
 const Cart = () => {
-  const { products, currency, cartItems, updateQuantity, navigate} = useContext(ShopContext);
+  const { products, currency, cartItems, updateQuantity, navigate } =
+    useContext(ShopContext);
   const [cartData, setCartData] = useState([]);
+useEffect(() => {
+  const tempData = [];   // define here, before the if
 
-  useEffect(() => {
-    const tempData = [];
+  if (products.length > 0) {
     for (const productId in cartItems) {
       for (const size in cartItems[productId]) {
         if (cartItems[productId][size] > 0) {
@@ -21,9 +23,10 @@ const Cart = () => {
         }
       }
     }
+  }
 
-    setCartData(tempData);
-  }, [cartItems]);
+  setCartData(tempData);  // safe to use here
+}, [cartItems, products]);
 
   return (
     <div className="border-t pt-14">
@@ -63,25 +66,46 @@ const Cart = () => {
                   </div>
                 </div>
               </div>
-              <input onChange={(e)=> e.target.value === '' || e.target.value === '0' ? null : updateQuantity(item._id, item.size,Number(e.target.value))} className="border max-w-10 sm:max-w-15 px-1 sm:px-2 py-1 rounded" type="number" min={1} defaultValue={item.quantity} name="" id="" />
-              <img onClick={()=>updateQuantity(item._id, item.size,0)} className="w-4 mr-4 sm:w-5 cursor-pointer" src={assets.bin_icon} alt="" />
+              <input
+                onChange={(e) =>
+                  e.target.value === "" || e.target.value === "0"
+                    ? null
+                    : updateQuantity(
+                        item._id,
+                        item.size,
+                        Number(e.target.value)
+                      )
+                }
+                className="border max-w-10 sm:max-w-15 px-1 sm:px-2 py-1 rounded"
+                type="number"
+                min={1}
+                defaultValue={item.quantity}
+                name=""
+                id=""
+              />
+              <img
+                onClick={() => updateQuantity(item._id, item.size, 0)}
+                className="w-4 mr-4 sm:w-5 cursor-pointer"
+                src={assets.bin_icon}
+                alt=""
+              />
             </div>
           );
         })}
       </div>
 
       <div className="flex justify-end my-20">
-          <div className="w-full sm:w-[450px]">
-            <CartTotal/>
-            <div className="w-full text-end">
-              <button onClick={()=>navigate('./place-order')} className="bg-black text-white text-sm my-8 px-6 py-3 rounded cursor-pointer">
-                PROCEED TO PAY
-
-              </button>
-            </div>
-
+        <div className="w-full sm:w-[450px]">
+          <CartTotal />
+          <div className="w-full text-end">
+            <button
+              onClick={() => navigate("./place-order")}
+              className="bg-black text-white text-sm my-8 px-6 py-3 rounded cursor-pointer"
+            >
+              PROCEED TO PAY
+            </button>
           </div>
-
+        </div>
       </div>
     </div>
   );
