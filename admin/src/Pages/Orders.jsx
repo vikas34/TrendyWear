@@ -22,7 +22,7 @@ const Orders = ({ token }) => {
 
       // console.log(response.data);
       if (response.data.success) {
-        setOrders(response.data.orders);
+        setOrders(response.data.orders.reverse());
       } else {
         toast.error(response.data.message);
       }
@@ -37,7 +37,7 @@ const Orders = ({ token }) => {
       backendUrl + "/api/order/status",
       { orderId, status: event.target.value },
       {
-        headers: { Authorization: `Bearer ${token}` }, // ✅ FIXED
+        headers: { Authorization: `Bearer ${token}` }, 
       }
     );
 
@@ -49,7 +49,7 @@ const Orders = ({ token }) => {
     }
   } catch (error) {
     console.error(error);
-    toast.error(error.response?.data?.message || error.message); // ✅ FIXED
+    toast.error(error.response?.data?.message || error.message); 
   }
 };
 
@@ -116,7 +116,7 @@ const Orders = ({ token }) => {
             <select
               onChange={(event) => statusHandler(event, order._id)}
               value={order.status}
-              className="p-2 font-semibold"
+              className="p-2 font-semibold cursor-pointer"
             >
               <option value="Order Place">Order Place</option>
               <option value="Packing">Packing</option>
