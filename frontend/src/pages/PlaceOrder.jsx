@@ -58,42 +58,66 @@ const PlaceOrder = () => {
         }
       }
 
-     let orderData = {
-      address : formData,
-      items:orderItems,
-      amount:getCartAmount() + delivery_fee
-     }
+      let orderData = {
+        address: formData,
+        items: orderItems,
+        amount: getCartAmount() + delivery_fee,
+      };
 
-     switch(method){
-      //Api call for COD
+      // console.log for debugging
+      console.log("Sending order data:", orderData);
+      console.log("Using token:", token);
 
-      case 'cod':
-        const response = await axios.post(backendUrl + '/api/order/place',orderData,{headers:{token}})
-       
-        if(response.data.success){
-          setCartItems({})
-          navigate('/orders')
-        }else{
-          toast.error(response.data.message)
-        }
-        break;
+      switch (method) {
+        // COD
+        case "cod": {
+          const response = await axios.post(
+            backendUrl + "/api/order/place",
+            orderData,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
 
-        case 'stripe':
-          const responseStripe = await axios.post(backendUrl + '/api/order/stripe',orderData,{headers:{token}})
-          if(responseStripe.data.success){
-            const {session_url} = responseStripe.data
-            window.location.replace(session_url)
-          }else{
-            toast.error(responseStripe.data.message)
+          if (response.data.success) {
+            setCartItems({});
+            navigate("/orders");
+          } else {
+            toast.error(response.data.message);
           }
-        
+          break;
+        }
+
+        // Stripe
+        case "stripe": {
+          const responseStripe = await axios.post(
+            backendUrl + "/api/order/stripe",
+            orderData,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+          if (responseStripe.data.success) {
+            const { session_url } = responseStripe.data;
+            window.location.replace(session_url);
+          } else {
+            toast.error(responseStripe.data.message);
+          }
+          break;
+        }
+
+        // Razorpay (future use)
+        case "razorpay": {
+          toast.info("Razorpay integration not implemented yet");
+          break;
+        }
+
         default:
           break;
-     }
-      // TODO: send orderItems + formData + method → backend
+      }
     } catch (error) {
       console.error("Order submit failed:", error);
-      toast.error(error.message)
+      toast.error(error.response?.data?.message || error.message);
     }
   };
 
