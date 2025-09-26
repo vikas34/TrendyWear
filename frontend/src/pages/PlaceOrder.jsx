@@ -64,10 +64,6 @@ const PlaceOrder = () => {
         amount: getCartAmount() + delivery_fee,
       };
 
-      // console.log for debugging
-      console.log("Sending order data:", orderData);
-      console.log("Using token:", token);
-
       switch (method) {
         // COD
         case "cod": {
@@ -81,6 +77,7 @@ const PlaceOrder = () => {
 
           if (response.data.success) {
             setCartItems({});
+            toast.success("Order placed successfully 🎉");
             navigate("/orders");
           } else {
             toast.error(response.data.message);
@@ -98,6 +95,7 @@ const PlaceOrder = () => {
             }
           );
           if (responseStripe.data.success) {
+            toast.success("Redirecting to Stripe payment...");
             const { session_url } = responseStripe.data;
             window.location.replace(session_url);
           } else {
