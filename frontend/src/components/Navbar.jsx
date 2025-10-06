@@ -99,10 +99,7 @@ const Navbar = () => {
                 >
                   Orders
                 </p>
-                <p
-                  onClick={logout}
-                  className="cursor-pointer hover:text-black"
-                >
+                <p onClick={logout} className="cursor-pointer hover:text-black">
                   Logout
                 </p>
               </div>
@@ -129,11 +126,14 @@ const Navbar = () => {
 
       {/* SideBar Menu for small screen */}
       <div
-        className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${
-          visible ? "w-full" : "w-0"
-        }`}
+        className={`fixed top-0 right-0 bottom-0 bg-white z-50 transition-all duration-300 ease-in-out
+       ${
+         visible
+           ? "translate-x-0 w-64 opacity-100"
+           : "translate-x-full w-64 opacity-0 pointer-events-none"
+       }`}
       >
-        <div className="flex flex-col text-gray-600">
+        <div className="flex flex-col text-gray-600 h-full">
           <div
             onClick={() => setVisible(false)}
             className="flex items-center gap-4 p-3 cursor-pointer"
